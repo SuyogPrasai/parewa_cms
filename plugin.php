@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Post Sync Plugin
  * Description: Sends a POST request to a secure Next.js server whenever a WordPress post is published, modified, or deleted.
- * Version: 1.0
+ * Version: 1.3
  * Author: Suyog Prasai
  * License: GPLv2 or later
  */
@@ -13,61 +13,70 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Define constants for the Next.js server and API key.
-define( 'NEXTJS_SERVER_URL', 'http://host.docker.internal:3000/post' ); // Replace with your Next.js server URL.
-define( 'NEXTJS_API_KEY', '9SGnap5OiEdeGPdxa0BHwnFLqRfZy4YlMAbtGYGGvrcV1VQMHzHzCicMLoYbMfg2YDXskSsYHjqRfoTyUxtWbdlaejNKEhVQWNPZEuxaaNnN5HzWUj5qoO7JQU4GzAS5' ); // Replace with your API key.
+define( 'POST_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/post' ); // Update with your Next.js server URL.
+define( 'POST_SYNC_API_KEY', '9SGnap5OiEdeGPdxa0BHwnFLqRfZy4YlMAbtGYGGvrcV1VQMHzHzCicMLoYbMfg2YDXskSsYHjqRfoTyUxtWbdlaejNKEhVQWNPZEuxaaNnN5HzWUj5qoO7JQU4GzAS5' ); // Replace with your actual API key.
 
-add_action( 'publish_post', 'post_sync_handle_post', 10, 2 );
-add_action( 'edit_post', 'post_sync_handle_post', 10, 2 );
+// Hooks for post events.
+add_action( 'save_post', 'post_sync_handle_post', 10, 2 );
+add_action( 'wp_trash_post', 'post_sync_handle_deletion', 10, 1 );
+add_action( 'delete_post', 'post_sync_handle_deletion', 10, 1 );
 
-// Function to handle post publishing, editing, or deleting
+/**
+ * Handles publishing or updating posts.
+ */
 function post_sync_handle_post( $post_id, $post ) {
-    // Check if the post type is 'post' and it's not an auto-save.
-    if ( 'post' !== get_post_type( $post_id ) || wp_is_post_autosave( $post_id ) ) {
+    if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
         return;
     }
 
-    // Log the current filter name to ensure correct event is triggered.
-    error_log("Current Filter: " . current_filter());
-
-    // Ensure content is not empty, and sanitize input data.
     $data = array(
-        'id'      => $post_id,
-        'title'   => sanitize_text_field( $post->post_title ),
-        'content' => sanitize_textarea_field( $post->post_content ),
+        'id'            => $post_id,
+        'title'         => get_the_title( $post_id ),
+        'content'       => apply_filters( 'the_content', $post->post_content ),
+        'type'          => get_post_type( $post_id ),
+        'author'        => get_the_author_meta( 'display_name', $post->post_author ),
+        'date'          => get_the_date( 'c', $post_id ),
+        'modified'      => get_the_modified_date( 'c', $post_id ),
+        'permalink'     => get_permalink( $post_id ),
+        'categories'    => wp_get_post_categories( $post_id, array( 'fields' => 'names' ) ),
+        'tags'          => wp_get_post_tags( $post_id, array( 'fields' => 'names' ) ),
+        'featured_image'=> get_the_post_thumbnail_url( $post_id, 'full' ) ?: '',
+        'event'         => ( get_post_status( $post_id ) === 'publish' ) ? 'published' : 'modified',
     );
 
-    // Determine the event type (published, modified, or deleted).
-    if ( current_filter() === 'publish_post' ) {
-        $data['event'] = 'published';
-    } elseif ( current_filter() === 'edit_post' ) {
-        $data['event'] = 'modified';
-    }
-
-    // Log the data to ensure it's correct.
-    error_log("Post Sync Data: " . print_r($data, true));
-
-    // Mark the post as synced to avoid duplicate requests.
-    update_post_meta( $post_id, '_post_sync_sent', true );
+    post_sync_send_request( $data );
 }
 
-// Function to send the data to the Next.js server
-function post_sync_send_to_nextjs( $data ) {
-    $url = NEXTJS_SERVER_URL
-    
-    // Send POST request to the Next.js server with the data.
-    $response = wp_remote_post( $url, array(
-        'method'      => 'POST',
-        'timeout'     => 10,
-        'headers'     => array(
-            'Content-Type' => 'application/json',
-            'Authorization' => NEXTJS_API_KEY,
+/**
+ * Handles post deletion (soft and hard delete).
+ */
+function post_sync_handle_deletion( $post_id ) {
+    $data = array(
+        'id'    => $post_id,
+        'type'  => get_post_type( $post_id ),
+        'event' => ( current_filter() === 'wp_trash_post' ) ? 'trashed' : 'deleted',
+    );
+
+    post_sync_send_request( $data );
+}
+
+/**
+ * Sends the data to the Next.js server.
+ */
+function post_sync_send_request( $data ) {
+    $response = wp_remote_post( POST_SYNC_NEXTJS_URL, array(
+        'method'    => 'POST',
+        'timeout'   => 10,
+        'headers'   => array(
+            'Content-Type'  => 'application/json',
+            'Authorization' => 'Bearer ' . POST_SYNC_API_KEY,
         ),
-        'body'        => wp_json_encode($data), // Ensure this matches expected format on Next.js server.
+        'body'      => wp_json_encode( $data ),
     ) );
 
     if ( is_wp_error( $response ) ) {
-        error_log( 'Post Sync Plugin: ' . $response->get_error_message() );
+        error_log( '[Post Sync Plugin] Error: ' . $response->get_error_message() );
     } elseif ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
-        error_log( 'Post Sync Plugin: Failed with response code ' . wp_remote_retrieve_response_code( $response ) );
+        error_log( '[Post Sync Plugin] Error: HTTP ' . wp_remote_retrieve_response_code( $response ) );
     }
 }
