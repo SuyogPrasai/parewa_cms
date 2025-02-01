@@ -8,83 +8,130 @@
  */
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
     exit;
 }
 
 // Define constants securely.
-define( 'POST_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/post' ); // Update this URL as needed.
-define( 'POST_SYNC_API_KEY', 'your-secure-api-key-here' ); // Store securely, consider using environment variables.
+define('POST_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/post'); // Update this URL as needed.
+define('POST_SYNC_API_KEY', '9SGnap5OiEdeGPdxa0BHwnFLqRfZy4YlMAbtGYGGvrcV1VQMHzHzCicMLoYbMfg2YDXskSsYHjqRfoTyUxtWbdlaejNKEhVQWNPZEuxaaNnN5HzWUj5qoO7JQU4GzAS5'); // Store securely, consider using environment variables.
 
 // Hook into post lifecycle events.
-add_action( 'wp_after_insert_post', 'post_sync_handle_post', 99, 2 );
-add_action( 'wp_trash_post', 'post_sync_handle_deletion', 99 );
-add_action( 'delete_post', 'post_sync_handle_deletion', 99 );
+
+
+
+add_action('wp_after_insert_post', 'post_sync_handle_post', 10, 2);
+add_action('wp_trash_post', 'post_sync_handle_deletion', 10, 1);
+add_action( 'untrash_post', 'post_sync_handle_restore', 10, 1);
+
 
 /**
  * Handles post publish/update events.
  */
-function post_sync_handle_post( $post_id, $post ) {
-    if ( wp_is_post_autosave( $post_id ) || wp_is_post_revision( $post_id ) ) {
+function post_sync_handle_post($post_id, $post): void
+{
+    error_log(message: "[Post Sync Plugin] post_sync_handle_post triggered for post ID: $post_id with filter: " . current_filter());
+
+    if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id)) {
         return;
     }
 
     $data = [
-        'id'            => $post_id,
-        'title'         => get_the_title( $post_id ),
-        'content'       => apply_filters( 'the_content', $post->post_content ),
-        'type'          => get_post_type( $post_id ),
-        'author'        => get_the_author_meta( 'display_name', $post->post_author ),
-        'date'          => get_the_date( 'c', $post_id ),
-        'modified'      => get_the_modified_date( 'c', $post_id ),
-        'permalink'     => get_permalink( $post_id ),
-        'tags'          => wp_get_post_tags( $post_id, [ 'fields' => 'names' ] ),
-        'featured_image'=> get_the_post_thumbnail_url( $post_id, 'full' ) ?: '',
-        'event'         => ( get_post_status( $post_id ) === 'publish' ) ? 'published' : 'modified',
+        'id' => $post_id,
+        'title' => get_the_title($post_id),
+        'content' => apply_filters('the_content', $post->post_content),
+        'type' => get_post_type($post_id),
+        'author' => get_the_author_meta('display_name', $post->post_author),
+        'date' => get_the_date('c', $post_id),
+        'modified' => get_the_modified_date('c', $post_id),
+        'permalink' => get_permalink($post_id),
+        'tags' => wp_get_post_tags($post_id, ['fields' => 'names']),
+        'featured_image' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
+        'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
     ];
 
-    post_sync_send_request( $data );
+
+    post_sync_send_request($data);
 }
+
+function post_sync_handle_restore($post_id): void
+{
+    $post_type = get_post_type($post_id);
+    if (!$post_type) {
+        return;
+    }
+    error_log(message: "[Post Sync Plugin] post restore triggered for post ID: $post_id with filter: " . current_filter());
+
+    $data = [
+        'id' => $post_id,
+        'title' => get_the_title($post_id),
+        'content' => apply_filters('the_content', $post->post_content),
+        'type' => get_post_type($post_id),
+        'author' => get_the_author_meta('display_name', $post->post_author),
+        'date' => get_the_date('c', $post_id),
+        'modified' => get_the_modified_date('c', $post_id),
+        'permalink' => get_permalink($post_id),
+        'tags' => wp_get_post_tags($post_id, ['fields' => 'names']),
+        'featured_image' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
+        'event' => 'post_restore',
+    ];
+    error_log("[Post Sync Plugin] Sending restoration request: " . json_encode($data));
+
+    post_sync_send_request($data);
+}
+
 
 /**
  * Handles post deletion (soft and hard delete).
  */
-function post_sync_handle_deletion( $post_id ) {
-    $post_type = get_post_type( $post_id );
-    if ( ! $post_type ) {
+function post_sync_handle_deletion($post_id): void
+{
+    $post_type = get_post_type($post_id);
+    if (!$post_type) {
         return;
     }
+    error_log(message: "[Post Sync Plugin] post_sync_handle_deletion triggered for post ID: $post_id with filter: " . current_filter());
 
     $data = [
-        'id'    => $post_id,
-        'type'  => $post_type,
-        'event' => ( current_filter() === 'wp_trash_post' ) ? 'trashed' : 'deleted',
+        'id' => $post_id,
+        'title' => get_the_title($post_id),
+        'content' => apply_filters('the_content', $post->post_content),
+        'type' => get_post_type($post_id),
+        'date' => get_the_date('c', $post_id),
+        'author' => get_the_author_meta('display_name', $post->post_author),
+        'modified' => get_the_modified_date('c', $post_id),
+        'permalink' => get_permalink($post_id),
+        'tags' => wp_get_post_tags($post_id, ['fields' => 'names']),
+        'featured_image' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
+        'event' => (current_filter() === 'wp_trash_post') ? 'trashed' : 'deleted',
     ];
+    error_log("[Post Sync Plugin] Sending deletion request: " . json_encode($data));
 
-    post_sync_send_request( $data );
+    post_sync_send_request($data);
 }
 
 /**
  * Sends the data to the Next.js server.
  */
-function post_sync_send_request( $data ) {
-    $response = wp_remote_post( POST_SYNC_NEXTJS_URL, [
-        'method'    => 'POST',
-        'timeout'   => 10,
-        'headers'   => [
-            'Content-Type'  => 'application/json',
-            'Authorization' => 'Bearer ' . POST_SYNC_API_KEY,
+function post_sync_send_request($data)
+{
+    $response = wp_remote_post(POST_SYNC_NEXTJS_URL, [
+        'method' => 'POST',
+        'timeout' => 10,
+        'headers' => [
+            'Content-Type' => 'application/json',
+            'Authorization' => POST_SYNC_API_KEY,
         ],
-        'body'      => wp_json_encode( $data ),
+        'body' => wp_json_encode($data),
     ]);
 
-    if ( is_wp_error( $response ) ) {
-        error_log( '[Post Sync Plugin] Request Error: ' . $response->get_error_message() );
+    if (is_wp_error($response)) {
+        error_log('[Post Sync Plugin] Request Error: ' . $response->get_error_message());
         return;
     }
 
-    $status_code = wp_remote_retrieve_response_code( $response );
-    if ( $status_code !== 200 ) {
-        error_log( '[Post Sync Plugin] HTTP Error: ' . $status_code . ' - ' . wp_remote_retrieve_body( $response ) );
+    $status_code = wp_remote_retrieve_response_code($response);
+    if ($status_code !== 200) {
+        error_log('[Post Sync Plugin] HTTP Error: ' . $status_code . ' - ' . wp_remote_retrieve_body($response));
     }
 }
