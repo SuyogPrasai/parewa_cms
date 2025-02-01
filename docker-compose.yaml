@@ -16,7 +16,6 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     restart: always
-
   db:
     image: mariadb:10.11  # Lightweight SQL database
     environment:
