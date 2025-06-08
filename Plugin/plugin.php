@@ -37,7 +37,7 @@ function post_sync_handle_post($post_id, $post): void
             'content' => apply_filters('the_content', $post->post_content),
             'publishedIn' => get_the_date('c', $post_id),
             'featuredImage' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
-            'publisher' => get_the_author_meta('display_name', $post->post_author),
+            'publisher_name' => get_the_author_meta('display_name', $post->post_author),
             'postTags' => wp_get_post_tags($post_id, ['fields' => 'names']),
             'category' => get_field( 'notice_category', $post_id ),
             'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
@@ -82,7 +82,7 @@ function post_sync_handle_restore($post_id): void
     error_log(message: "[Post Sync Plugin] post restore triggered for post ID: $post_id with filter: " . current_filter());
 
     $data = [
-        'id' => $post_id,
+        'wp_id' => $post_id,
         'event' => 'post_restore',
         'type' => get_post_type($post_id),
         'publisher' => get_the_author_meta('display_name', $post->post_author),
@@ -104,7 +104,7 @@ function post_sync_handle_deletion($post_id): void
     error_log(message: "[Post Sync Plugin] post_sync_handle_deletion triggered for post ID: $post_id with filter: " . current_filter());
 
     $data = [
-        'id' => $post_id,
+        'wp_id' => $post_id,
         'event' => (current_filter() === 'wp_trash_post') ? 'trashed' : 'deleted',
         'type' => get_post_type($post_id),
         'publisher' => get_the_author_meta('display_name', $post->post_author),
