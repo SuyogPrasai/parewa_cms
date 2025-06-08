@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Post Sync Plugin
  * Description: Syncs WordPress posts with a Next.js server on publish, update, or delete events.
- * Version: 1.4
+ * Version: 1.5
  * Author: Suyog Prasai
  * License: GPLv2 or later
  */
@@ -32,18 +32,16 @@ function post_sync_handle_post($post_id, $post): void
             return;
         }
         $data = [
-            'id' => $post_id,
+            'wp_id' => $post_id,
             'title' => get_the_title($post_id),
             'content' => apply_filters('the_content', $post->post_content),
-            'type' => get_post_type($post_id),
+            'publishedIn' => get_the_date('c', $post_id),
+            'featuredImage' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
             'publisher' => get_the_author_meta('display_name', $post->post_author),
-            'date' => get_the_date('c', $post_id),
-            'modified' => get_the_modified_date('c', $post_id),
-            'permalink' => get_permalink($post_id),
-            'tags' => wp_get_post_tags($post_id, ['fields' => 'names']),
-            'featured_image' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
-            'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
+            'postTags' => wp_get_post_tags($post_id, ['fields' => 'names']),
             'category' => get_field( 'notice_category', $post_id ),
+            'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
+            'type' => get_post_type($post_id),
         ];
 
     } elseif ( get_post_type($post_id) == 'article'){
@@ -52,19 +50,18 @@ function post_sync_handle_post($post_id, $post): void
             return;
         }
         $data = [
-            'id' => $post_id,
+            'wp_id' => $post_id,
             'title' => get_the_title($post_id),
+            'oneLiner' => get_field( 'one_liner', $post_id ),
             'content' => apply_filters('the_content', $post->post_content),
-            'type' => get_post_type($post_id),
-            'publisher' => get_the_author_meta('display_name', $post->post_author),
-            'date' => get_the_date('c', $post_id),
-            'modified' => get_the_modified_date('c', $post_id),
-            'permalink' => get_permalink($post_id),
-            'tags' => wp_get_post_tags($post_id, ['fields' => 'names']),
-            'featured_image' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
-            'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
+            'publishedIn' => get_the_date('c', $post_id),
+            'featuredImage' => get_the_post_thumbnail_url($post_id, 'full') ?: '',
+            'publisher_name' => get_the_author_meta('display_name', $post->post_author),
+            'postTags' => wp_get_post_tags($post_id, ['fields' => 'names']),
             'category' => get_field( 'article_category', $post_id ),
             'author_name' => get_field( 'author', $post_id ),
+            'event' => ($post->post_date_gmt === $post->post_modified_gmt) ? 'published' : 'modified',
+            'type' => get_post_type($post_id),
         ];
 
     } else {
