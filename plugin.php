@@ -10,7 +10,7 @@
 // Define constants securely.
 define('POST_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/post'); // Update for posts
 define('USER_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/user'); // New endpoint for users
-define('POST_SYNC_API_KEY', '9SGnap5OiEdeGPdxa0BHwnFLqRfZy4YlMAbtGYGGvrcV1VQMHzHzCicMLoYbMfg2YDXskSsYHjqRfoTyUxtWbdlaejNKEhVQWNPZEuxaaNnN5HzWUj5qoO7JQU4GzAS5'); // Store securely
+define('POST_SYNC_API_KEY', 'YOUR_API_KEY'); // Store securely
 
 // Post-related hooks
 add_action('wp_after_insert_post', 'post_sync_handle_post', 10, 2);

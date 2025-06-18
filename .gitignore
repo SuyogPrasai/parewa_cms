@@ -1,0 +1,48 @@
+# Ignore PHPStorm and other JetBrains IDE settings
+.idea/
+
+# Ignore Composer dependencies
+/vendor/
+
+# Ignore environment and config files
+.env
+.env.local
+.env.*.local
+*.env.php
+
+# Ignore log files
+*.log
+
+# Ignore cache and session files
+cache/
+tmp/
+storage/
+*.cache
+*.tmp
+
+# Ignore PHPUnit result cache
+.phpunit.result.cache
+
+# Ignore local development tools and OS files
+.DS_Store
+Thumbs.db
+
+# Ignore backup files
+*.bak
+*.old
+*.swp
+*.swo
+
+# Ignore node_modules if using frontend tooling
+node_modules/
+
+# Ignore compiled files (optional)
+*.compiled.php
+
+# Ignore database dumps
+*.sql
+*.sqlite
+*.db
+
+# Ignore deployment files
+deploy.php
