@@ -1,6 +1,6 @@
 ## Post Sync Plugin 
 
->![Important]
+>! [!IMPORTANT]
 >Automatically syncs WordPress posts and user data with a Next.js server whenever a post or user is created, updated, deleted, or restored. Supports custom post types and includes secure API key integration for communication.
 
 1. 🔁 **Auto Sync on Events**
