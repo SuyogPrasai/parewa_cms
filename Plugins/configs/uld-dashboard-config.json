@@ -1,0 +1,673 @@
+[
+    {
+        "key": "group_684556483bef9",
+        "title": "Announcement Category",
+        "fields": [
+            {
+                "key": "field_684556483d7e9",
+                "label": "Announcement Category",
+                "name": "announcement_category",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "General": "General",
+                    "Departments": "Departments",
+                    "School": "School",
+                    "Council": "Council",
+                    "Clubs": "Clubs"
+                },
+                "default_value": "general",
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "announcement"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_6850ef678df19",
+        "title": "announcement show",
+        "fields": [
+            {
+                "key": "field_6850ef6721af6",
+                "label": "show",
+                "name": "show",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Choose whether to Show \/ Hide the Announcement",
+                "default_value": 1,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "announcement"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_679f19f0aeb4e",
+        "title": "Article Author",
+        "fields": [
+            {
+                "key": "field_679f19f0fa8fd",
+                "label": "Author",
+                "name": "author",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "article"
+                }
+            ],
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "announcement"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "seamless",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_67aef6f4e2d23",
+        "title": "Article Category",
+        "fields": [
+            {
+                "key": "field_67aef6f5452be",
+                "label": "Article Category",
+                "name": "article_category",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Literature": "Literature",
+                    "Science": "Science",
+                    "National": "National",
+                    "World": "World",
+                    "BNKS": "BNKS"
+                },
+                "default_value": false,
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "article"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_6850ea4a0eea7",
+        "title": "link",
+        "fields": [
+            {
+                "key": "field_6850ea490f1f9",
+                "label": "link",
+                "name": "link",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "Add a link to share more information about the announcement",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 0,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "announcement"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_68443094d8873",
+        "title": "One Liner",
+        "fields": [
+            {
+                "key": "field_6844309411fd3",
+                "label": "One Liner",
+                "name": "one_liner",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "Please Make it Short ( Between 10 - 20 words )",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "maxlength": "",
+                "allow_in_bindings": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "article"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "group_684598ab8aa6e",
+        "title": "position",
+        "fields": [
+            {
+                "key": "field_684598ab2989e",
+                "label": "position",
+                "name": "position",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "Head of House": "Head of House",
+                    "Teacher": "Teacher",
+                    "Head of Department": "Head of Department",
+                    "Principal": "Principal",
+                    "Vice Principal": "Vice Principal"
+                },
+                "default_value": "Teacher",
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "user_role",
+                    "operator": "==",
+                    "value": "author"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 1
+    },
+    {
+        "key": "group_67aef5d85d356",
+        "title": "Post Category",
+        "fields": [
+            {
+                "key": "field_67aef5d834a01",
+                "label": "Notice Category",
+                "name": "notice_category",
+                "aria-label": "",
+                "type": "select",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "General": "General",
+                    "Departments": "Departments",
+                    "School": "School",
+                    "Council": "Council",
+                    "Clubs": "Clubs"
+                },
+                "default_value": "general",
+                "return_format": "value",
+                "multiple": 0,
+                "allow_null": 0,
+                "allow_in_bindings": 0,
+                "ui": 0,
+                "ajax": 0,
+                "placeholder": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "news"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    },
+    {
+        "key": "post_type_6844323c405fb",
+        "title": "Announcements",
+        "menu_order": 0,
+        "active": true,
+        "post_type": "announcement",
+        "advanced_configuration": true,
+        "import_source": "",
+        "import_date": "",
+        "labels": {
+            "name": "Announcements",
+            "singular_name": "Announcement",
+            "menu_name": "Announcements",
+            "all_items": "All Announcements",
+            "edit_item": "Edit Announcement",
+            "view_item": "View Announcement",
+            "view_items": "View Announcements",
+            "add_new_item": "Add New Announcement",
+            "add_new": "Add New Announcement",
+            "new_item": "New Announcement",
+            "parent_item_colon": "Parent Announcement:",
+            "search_items": "Search Announcements",
+            "not_found": "No announcements found",
+            "not_found_in_trash": "No announcements found in Trash",
+            "archives": "Announcement Archives",
+            "attributes": "Announcement Attributes",
+            "featured_image": "",
+            "set_featured_image": "",
+            "remove_featured_image": "",
+            "use_featured_image": "",
+            "insert_into_item": "Insert into announcement",
+            "uploaded_to_this_item": "Uploaded to this announcement",
+            "filter_items_list": "Filter announcements list",
+            "filter_by_date": "Filter announcements by date",
+            "items_list_navigation": "Announcements list navigation",
+            "items_list": "Announcements list",
+            "item_published": "Announcement published.",
+            "item_published_privately": "Announcement published privately.",
+            "item_reverted_to_draft": "Announcement reverted to draft.",
+            "item_scheduled": "Announcement scheduled.",
+            "item_updated": "Announcement updated.",
+            "item_link": "Announcement Link",
+            "item_link_description": "A link to a announcement."
+        },
+        "description": "",
+        "public": true,
+        "hierarchical": false,
+        "exclude_from_search": false,
+        "publicly_queryable": true,
+        "show_ui": true,
+        "show_in_menu": true,
+        "admin_menu_parent": "",
+        "show_in_admin_bar": true,
+        "show_in_nav_menus": true,
+        "show_in_rest": true,
+        "rest_base": "",
+        "rest_namespace": "wp\/v2",
+        "rest_controller_class": "WP_REST_Posts_Controller",
+        "menu_position": 0,
+        "menu_icon": {
+            "type": "dashicons",
+            "value": "dashicons-edit-page"
+        },
+        "rename_capabilities": false,
+        "singular_capability_name": "post",
+        "plural_capability_name": "posts",
+        "supports": [
+            "title",
+            "author",
+            "editor",
+            ""
+        ],
+        "taxonomies": "",
+        "has_archive": false,
+        "has_archive_slug": "",
+        "rewrite": {
+            "permalink_rewrite": "post_type_key",
+            "with_front": "1",
+            "feeds": "0",
+            "pages": "1"
+        },
+        "query_var": "post_type_key",
+        "query_var_name": "",
+        "can_export": true,
+        "delete_with_user": false,
+        "register_meta_box_cb": "",
+        "enter_title_here": ""
+    },
+    {
+        "key": "post_type_6799d2bcc8746",
+        "title": "Articles",
+        "menu_order": 0,
+        "active": true,
+        "post_type": "article",
+        "advanced_configuration": true,
+        "import_source": "",
+        "import_date": "",
+        "labels": {
+            "name": "Articles",
+            "singular_name": "Article",
+            "menu_name": "Articles",
+            "all_items": "All Articles",
+            "edit_item": "Edit Article",
+            "view_item": "View Article",
+            "view_items": "View Articles",
+            "add_new_item": "Add New Article",
+            "add_new": "Add New Article",
+            "new_item": "New Article",
+            "parent_item_colon": "Parent Article:",
+            "search_items": "Search Articles",
+            "not_found": "No articles found",
+            "not_found_in_trash": "No articles found in Trash",
+            "archives": "Article Archives",
+            "attributes": "Article Attributes",
+            "featured_image": "",
+            "set_featured_image": "",
+            "remove_featured_image": "",
+            "use_featured_image": "",
+            "insert_into_item": "Insert into article",
+            "uploaded_to_this_item": "Uploaded to this article",
+            "filter_items_list": "Filter articles list",
+            "filter_by_date": "Filter articles by date",
+            "items_list_navigation": "Articles list navigation",
+            "items_list": "Articles list",
+            "item_published": "Article published.",
+            "item_published_privately": "Article published privately.",
+            "item_reverted_to_draft": "Article reverted to draft.",
+            "item_scheduled": "Article scheduled.",
+            "item_updated": "Article updated.",
+            "item_link": "Article Link",
+            "item_link_description": "A link to a article."
+        },
+        "description": "This is a news article",
+        "public": true,
+        "hierarchical": false,
+        "exclude_from_search": false,
+        "publicly_queryable": true,
+        "show_ui": true,
+        "show_in_menu": true,
+        "admin_menu_parent": "",
+        "show_in_admin_bar": true,
+        "show_in_nav_menus": true,
+        "show_in_rest": true,
+        "rest_base": "",
+        "rest_namespace": "wp\/v2",
+        "rest_controller_class": "WP_REST_Posts_Controller",
+        "menu_position": "",
+        "menu_icon": {
+            "type": "dashicons",
+            "value": "dashicons-clipboard"
+        },
+        "rename_capabilities": false,
+        "singular_capability_name": "post",
+        "plural_capability_name": "posts",
+        "supports": [
+            "title",
+            "editor",
+            "thumbnail",
+            "custom-fields"
+        ],
+        "taxonomies": [
+            "post_tag"
+        ],
+        "has_archive": false,
+        "has_archive_slug": "",
+        "rewrite": {
+            "permalink_rewrite": "post_type_key",
+            "with_front": "1",
+            "feeds": "0",
+            "pages": "1"
+        },
+        "query_var": "post_type_key",
+        "query_var_name": "",
+        "can_export": true,
+        "delete_with_user": false,
+        "register_meta_box_cb": "",
+        "enter_title_here": ""
+    },
+    {
+        "key": "post_type_6799d1a75b745",
+        "title": "News",
+        "menu_order": 0,
+        "active": true,
+        "post_type": "news",
+        "advanced_configuration": true,
+        "import_source": "",
+        "import_date": "",
+        "labels": {
+            "name": "News",
+            "singular_name": "Notice",
+            "menu_name": "News",
+            "all_items": "All News",
+            "edit_item": "Edit Notice",
+            "view_item": "View Notice",
+            "view_items": "View News",
+            "add_new_item": "Add New Notice",
+            "add_new": "Add New Notice",
+            "new_item": "New Notice",
+            "parent_item_colon": "Parent Notice:",
+            "search_items": "Search News",
+            "not_found": "No news found",
+            "not_found_in_trash": "No news found in Trash",
+            "archives": "Notice Archives",
+            "attributes": "Notice Attributes",
+            "featured_image": "",
+            "set_featured_image": "",
+            "remove_featured_image": "",
+            "use_featured_image": "",
+            "insert_into_item": "Insert into notice",
+            "uploaded_to_this_item": "Uploaded to this notice",
+            "filter_items_list": "Filter news list",
+            "filter_by_date": "Filter news by date",
+            "items_list_navigation": "News list navigation",
+            "items_list": "News list",
+            "item_published": "Notice published.",
+            "item_published_privately": "Notice published privately.",
+            "item_reverted_to_draft": "Notice reverted to draft.",
+            "item_scheduled": "Notice scheduled.",
+            "item_updated": "Notice updated.",
+            "item_link": "Notice Link",
+            "item_link_description": "A link to a notice."
+        },
+        "description": "This post type is notice which is the information about the school.",
+        "public": true,
+        "hierarchical": false,
+        "exclude_from_search": false,
+        "publicly_queryable": true,
+        "show_ui": true,
+        "show_in_menu": true,
+        "admin_menu_parent": "",
+        "show_in_admin_bar": true,
+        "show_in_nav_menus": true,
+        "show_in_rest": true,
+        "rest_base": "",
+        "rest_namespace": "wp\/v2",
+        "rest_controller_class": "WP_REST_Posts_Controller",
+        "menu_position": "",
+        "menu_icon": {
+            "type": "dashicons",
+            "value": "dashicons-admin-site-alt3"
+        },
+        "rename_capabilities": false,
+        "singular_capability_name": "post",
+        "plural_capability_name": "posts",
+        "supports": [
+            "title",
+            "editor",
+            "thumbnail",
+            "custom-fields"
+        ],
+        "taxonomies": [
+            "post_tag"
+        ],
+        "has_archive": false,
+        "has_archive_slug": "",
+        "rewrite": {
+            "permalink_rewrite": "post_type_key",
+            "with_front": "1",
+            "feeds": "0",
+            "pages": "1"
+        },
+        "query_var": "post_type_key",
+        "query_var_name": "",
+        "can_export": true,
+        "delete_with_user": false,
+        "register_meta_box_cb": "",
+        "enter_title_here": ""
+    }
+]
