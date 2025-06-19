@@ -19,10 +19,10 @@ Sends detailed JSON data including titles, content, tags, images, author names, 
 Built-in logging via error_log() helps track sync events and quickly identify any issues during data transfer.
 
 **The List of Plugins Being Used in the wordpress site is**
-| Serial Number | Plugin Name | Version |
-| --- | --- | --- |
-| 1   | Advanced Custom Fields | 6.3.12 |
-| 2   | Classic Editor | 1.6.7 |
-| 3   | Members | 3.2.18 |
-| 4   | Post and User Sync Plugin | 1.62 |
-| 5   | Ultimate Dashboard | 3.8.9 |
+| Serial Number | Plugin Name                     | Version | Author                |
+|---------------|---------------------------------|---------|-----------------------|
+| 1             | [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) | 6.3.12  | WP Engine             |
+| 2             | [Classic Editor](https://wordpress.org/plugins/classic-editor/) | 1.6.7   | WordPress Contributors |
+| 3             | [Members](https://wordpress.org/plugins/members/) | 3.2.18  | MemberPress           |
+| 4             | [Post and User Sync Plugin](https://github.com/SuyogPrasai/parewa_cms/releases/tag/parewa) | 1.62    | Suyog Prasai    |
+| 5             | [Ultimate Dashboard](https://wordpress.org/plugins/ultimate-dashboard/) | 3.8.9   | David Vongries        |
