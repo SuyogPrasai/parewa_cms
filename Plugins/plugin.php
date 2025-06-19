@@ -8,8 +8,8 @@
  */
 
 // Define constants securely.
-define('POST_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/post'); // Update for posts
-define('USER_SYNC_NEXTJS_URL', 'http://host.docker.internal:3000/api/user'); // New endpoint for users
+define('POST_SYNC_NEXTJS_URL', 'http://parewa_nextjs/api/post'); // Update for posts
+define('USER_SYNC_NEXTJS_URL', 'http://parewa_nextjs/api/user'); // New endpoint for users
 define('POST_SYNC_API_KEY', 'YOUR_API_KEY'); // Store securely
 
 // Post-related hooks
