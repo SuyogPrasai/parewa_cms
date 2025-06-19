@@ -17,3 +17,12 @@ Sends detailed JSON data including titles, content, tags, images, author names, 
 
 5. 🛠️ **Error Logging for Debugging**
 Built-in logging via error_log() helps track sync events and quickly identify any issues during data transfer.
+
+**The List of Plugins Being Used in the wordpress site is**
+| Serial Number | Plugin Name | Version |
+| --- | --- | --- |
+| 1   | Advanced Custom Fields | 6.3.12 |
+| 2   | Classic Editor | 1.6.7 |
+| 3   | Members | 3.2.18 |
+| 4   | Post and User Sync Plugin | 1.62 |
+| 5   | Ultimate Dashboard | 3.8.9 |
